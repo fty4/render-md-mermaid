@@ -20,5 +20,5 @@ runs:
     run: |
       for md in $(find . -name "*.md")
       do
-        ${GITHUB_ACTION_PATH}/render-md-mermaid.sh "$md" in-container
+        ${GITHUB_ACTION_PATH}/render-md-mermaid.sh "$md" composite
       done
