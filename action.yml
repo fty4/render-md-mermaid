@@ -4,5 +4,21 @@ branding:
   color: white
 description: 'Renders all mermaid diagrams in all Markdown files in a repository'
 runs:
-  using: 'docker'
-  image: 'Dockerfile'
+  using: composite
+  steps:
+  - name: install node 16.x
+    uses: actions/setup-node@v3
+    with:
+      node-version: 16.x
+
+  - name: install mermaid cli
+    shell: bash
+    run: npm install -g @mermaid-js/mermaid-cli
+
+  - name: run render-md-mermaid.sh
+    shell: bash
+    run: |
+      for md in $(find . -name "*.md")
+      do
+        ${GITHUB_ACTION_PATH}/render-md-mermaid.sh "$md" in-container
+      done
